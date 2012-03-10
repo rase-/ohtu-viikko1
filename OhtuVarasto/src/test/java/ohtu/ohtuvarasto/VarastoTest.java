@@ -65,4 +65,73 @@ public class VarastoTest {
         // varastossa pitäisi olla tilaa 10 - 8 + 2 eli 4
         assertEquals(4, varasto.paljonkoMahtuu(), vertailuTarkkuus);
     }
+    @Test
+    public void kunOttaaLiikaaNiinEiNegatiiviseksi() {
+        varasto.lisaaVarastoon(4);
+        
+        varasto.otaVarastosta(6);
+        assertEquals(0, varasto.getSaldo(),  vertailuTarkkuus);
+    }
+    @Test
+    public void kunOtetaanLiikaaNiinPalautetaanSeMitaVoidaan() {
+        varasto.lisaaVarastoon(4);
+        
+        assertEquals(4, varasto.otaVarastosta(6), vertailuTarkkuus);
+    }
+    @Test
+    public void kunLisataanLiikaaNiinLisataanVainTayteen() {
+        varasto.lisaaVarastoon(8);
+        varasto.lisaaVarastoon(10);
+        
+        assertEquals(10, varasto.getSaldo(), vertailuTarkkuus);
+    }
+    @Test
+    public void ottaminenPienentaaSaldoa() {
+        varasto.lisaaVarastoon(3);
+        
+        varasto.otaVarastosta(2);
+        
+        assertEquals(1, varasto.getSaldo(), vertailuTarkkuus);
+    }
+    @Test
+    public void negatiivinenTilavuusNollataan() {
+        varasto = new Varasto(-2);
+        assertEquals(0, varasto.getTilavuus(), vertailuTarkkuus);
+    }
+    @Test
+    public void josSaldoAluksiNegatiivinenNiinNollataan() {
+        varasto = new Varasto(2, -10);
+        assertEquals(0, varasto.getSaldo(), vertailuTarkkuus);
+    }
+    @Test
+    public void aluksiSaldoPienempiTaiYhtasuuriKuinTilavuus() {
+        varasto = new Varasto(2, 3);
+        assertEquals(2, varasto.getSaldo(), vertailuTarkkuus);
+    }
+    @Test
+    public void lisattaessaNegatiivistaMaaraaEiTehdaMitaan() {
+        varasto.lisaaVarastoon(-3);
+        
+        assertEquals(0, varasto.getSaldo(), vertailuTarkkuus);
+    }
+    @Test
+    public void toStringToimiiOIkein() {
+        assertEquals("saldo = 0.0, vielä tilaa 10.0", varasto.toString());
+    }
+    @Test
+    public void kuormitetullaKonstruktorillaTilavuusEiNegatiivinen() {
+        varasto = new Varasto(-2, 0);
+        assertEquals(0, varasto.getTilavuus(), vertailuTarkkuus);
+    }
+    @Test
+    public void kuormitetullaKonstruktorillaSaldoKorkeintaanTilavuus() {
+        varasto = new Varasto(2, 2);
+        
+        assertEquals(2, varasto.getSaldo(), vertailuTarkkuus);
+    }
+    @Test
+    public void varastostaEiVoiOttaaNegatiivistaMaaraa() {
+        varasto.otaVarastosta(-22);
+        assertEquals(0, varasto.getSaldo(), vertailuTarkkuus);
+    }
 }
