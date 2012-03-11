@@ -83,7 +83,7 @@ public class VarastoTest {
         varasto.lisaaVarastoon(8);
         varasto.lisaaVarastoon(10);
         
-        assertEquals(10, varasto.getSaldo(), vertailuTarkkuus);
+        assertEquals(11, varasto.getSaldo(), vertailuTarkkuus); //10 -> 11
     }
     @Test
     public void ottaminenPienentaaSaldoa() {
